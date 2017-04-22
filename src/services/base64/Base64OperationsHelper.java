@@ -5,12 +5,14 @@
  */
 package services.base64;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author Demis e Lucas
  */
 public class Base64OperationsHelper {
-    public String readMessage(String message){
+    public String readMessage(String message) throws RemoteException{
         String[]arrayMessage=message.split(" ");
         String response="";
         IBase64Operations base64Op=new Base64Operations();

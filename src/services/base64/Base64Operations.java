@@ -5,13 +5,20 @@
  */
 package services.base64;
 import java.io.UnsupportedEncodingException;
+import java.rmi.RemoteException;
+import java.rmi.server.RemoteObject;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Base64;
 
 /**
  *
  * @author Demis e Lucas
  */
-public class Base64Operations implements IBase64Operations{
+public class Base64Operations extends UnicastRemoteObject implements IBase64Operations{
+    public Base64Operations()throws RemoteException{
+        super();
+    }
+    
     @Override
     public String encode(String s){
         byte[] encodedBytes = Base64.getEncoder().encode(s.getBytes());

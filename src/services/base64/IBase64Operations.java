@@ -5,12 +5,15 @@
  */
 package services.base64;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  *
  * @author Demis e Lucas
  */
-public interface IBase64Operations {
-    public String encode(String s);
-    public String decode(String s);
+public interface IBase64Operations extends Remote{
+    public String encode(String s) throws RemoteException;
+    public String decode(String s) throws RemoteException;
     
 }
