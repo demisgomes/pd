@@ -6,8 +6,7 @@
 package tcp;
 
 import communicationManager.ConnectionManager;
-import services.Calculator;
-import services.CalculatorHelper;
+import services.base64.Base64OperationsHelper;
 
 /**
  *
@@ -31,19 +30,15 @@ public class ThreadClient extends Thread{
         
         try {
             
-             System.out.println("Uma requisição!");
-             byte[] data = cm.getDataTCP();
-             String msg = new String(data, "UTF-8");
-             //String[] datas = msg.split(" ");
-             String response = "";
+            System.out.println("Uma requisição!");
+            byte[] data = cm.getDataTCP();
+            String msg = new String(data, "UTF-8");
+            String response = "";
              
-             Calculator calculator = new Calculator();
-             
-             CalculatorHelper calcHelper=new CalculatorHelper();
-             response=calcHelper.calc(msg, calculator);
-             
-             this.cm.sendDataTCP(response.getBytes());
-             System.out.println("Enviando para o servidor 1");
+            Base64OperationsHelper b64Helper=new Base64OperationsHelper();
+            response=b64Helper.readMessage(msg);
+            this.cm.sendDataTCP(response.getBytes());
+            
              
         } catch (Exception e) {
             e.printStackTrace();

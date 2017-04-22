@@ -3,11 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tcp;
+package udp;
 
 import communicationManager.ConnectionManager;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,15 +26,19 @@ public class Client {
               ConnectionManager cm = new ConnectionManager();
               Scanner scanner = new Scanner(System.in);
 
-              System.out.println("Digite a operação e os caracteres\nPara codificar: E string\nPara decodificar: D string\nDigite 'exit' para sair:");
+             System.out.println("Digite a operação e os caracteres\nPara codificar: E string\nPara decodificar: D string\nDigite 'exit' para sair:");
               s = scanner.nextLine();
 
-              if((cm.connectionServerTCP("localhost", 2424) == true)&&(!s.equals("exit"))){
-                  cm.sendDataTCP(s.getBytes());
+              if(!s.equals("exit")){
+                  try {
+                      cm.sendDataUDP(s.getBytes(), InetAddress.getByName("localhost"),2424);
+                  } catch (UnknownHostException ex) {
+                      Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                  }
 
-                  System.out.println("ClienteTCP: Enviando operação. Esperando resposta...");
+                  System.out.println("ClienteUDP: Enviando operação. Esperando resposta...");
 
-                  byte[] data = cm.getDataTCP();
+                  byte[] data = cm.getDataUDP().getData();
                   String msg = new String(data, "UTF-8");
                   System.out.println(msg);
                   cm.closeConnectionTCP();
