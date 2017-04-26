@@ -13,6 +13,15 @@ import java.io.Serializable;
  */
 public class ReplyHeader implements Serializable{
 
+    public ReplyHeader() {
+    }
+
+    public ReplyHeader(String serviceContext, int requestId, int replyStatus) {
+        this.serviceContext = serviceContext;
+        this.requestId = requestId;
+        this.replyStatus = replyStatus;
+    }
+
     public String getServiceContext() {
         return serviceContext;
     }

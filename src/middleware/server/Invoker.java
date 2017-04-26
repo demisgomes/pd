@@ -11,4 +11,8 @@ package middleware.server;
  */
 public class Invoker {
     
+    public void invoke(){
+        
+    }
+    
 }

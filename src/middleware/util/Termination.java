@@ -10,7 +10,15 @@ package middleware.util;
  * @author Demis e Lucas
  */
 public class Termination {
-    public Object getResult(){
-        return null;
+    private Object result;
+
+    public Object getResult() {
+        return result;
     }
+
+    public void setResult(Object result) {
+        this.result = result;
+    }
+    
+    
 }
