@@ -102,7 +102,7 @@ public class ServerRequestHandler {
     
     public void send(byte[] msg) throws IOException{
         sentMessageSize = msg.length;
-        outToClient.writeInt(sentMessageSize);;
+        outToClient.writeInt(sentMessageSize);
         outToClient.write(msg);
         outToClient.flush();
         

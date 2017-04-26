@@ -5,11 +5,13 @@
  */
 package middleware.util;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Demis e Lucas
  */
-public class Message {
+public class Message implements Serializable{
     private MessageHeader messageHeader;
     private MessageBody messageBody;
 

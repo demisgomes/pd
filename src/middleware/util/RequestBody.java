@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Demis e Lucas
  */
 public class RequestBody implements Serializable{
-    private ArrayList<Object> parameters = new ArrayList<Object>();
+    private ArrayList<Object> parameters;
 
     public ArrayList<Object> getParameters() {
         return parameters;

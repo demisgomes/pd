@@ -5,6 +5,7 @@
  */
 package middleware.naming;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -14,15 +15,13 @@ import java.rmi.registry.Registry;
  * @author gprt
  */
 public class NamingServer {
-    public static void main(String[]args) throws RemoteException{
-        
-        Registry registry = LocateRegistry.createRegistry(2017);
-        boolean running = true;
-        NamingRepository namingRepository= NamingRepository.getInstance();
- 
+    public static void main(String[]args) throws RemoteException, IOException, InterruptedException{
+      
         System.out.println("Registry is ready...");
  
-        while (running) {
-        }
+        NamingProxy namingProxy=new NamingProxy("localhost",2017);
+        NamingInvoker invoker = new NamingInvoker();
+        
+        invoker.invoke(namingProxy);
     }
 }

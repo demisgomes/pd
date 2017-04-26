@@ -10,8 +10,17 @@ package middleware.client;
  * @author Demis e Lucas
  */
 public class ClientProxy {
-    private String host;
-    private int port;
+
+    public ClientProxy(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
+    
+    public ClientProxy(){
+        
+    }
+    protected String host;
+    protected int port;
     private int objectId;
 
     public String getHost() {

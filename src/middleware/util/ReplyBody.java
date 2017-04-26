@@ -5,11 +5,13 @@
  */
 package middleware.util;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Demis e Lucas
  */
-public class ReplyBody {
+public class ReplyBody implements Serializable{
     private Object operationResult;
 
     public Object getOperationResult() {

@@ -5,6 +5,7 @@
  */
 package middleware.services;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import middleware.client.ClientProxy;
 import middleware.client.Requestor;
@@ -15,15 +16,12 @@ import middleware.util.Termination;
  *
  * @author Demis e Lucas
  */
-public class Base64OperationsProxy extends ClientProxy implements IBase64Operations{
+public class Base64OperationsProxy extends ClientProxy implements IBase64Operations, Serializable{
 
     public Base64OperationsProxy(String host, int port){
-        this.setHost(host);
-        this.setPort(port);
+        super(host,port);
     }
 
-    public Base64OperationsProxy() {
-    }
     @Override
     public String encode(String s) throws Throwable {
         Invocation invocation=new Invocation();

@@ -13,9 +13,8 @@ import middleware.client.ClientProxy;
  * @author gprt
  */
 public class NamingRepository {
-    private ArrayList<NamingRecord> records = new ArrayList<NamingRecord>();
-    private static NamingRepository instance;
-
+    public static ArrayList<NamingRecord> records = new ArrayList<NamingRecord>();
+    
     public ArrayList<NamingRecord> getRecords() {
         return records;
     }
@@ -24,11 +23,11 @@ public class NamingRepository {
         this.records = records;
     }
     
-    public static NamingRepository getInstance(){
+   /* public static NamingRepository getInstance(){
         createInstanceIfNotExists();
         return instance;
     }
-    
+    */
     
     public void addRecord(String serviceName, ClientProxy clientProxy){
         this.getRecords().add(new NamingRecord(serviceName,clientProxy));
@@ -45,10 +44,11 @@ public class NamingRepository {
         return result;
     }
     
-    private static void createInstanceIfNotExists(){
+    /*private static void createInstanceIfNotExists(){
         if (instance == null){
+            System.out.println("middleware.naming.NamingRepository.createInstanceIfNotExists()");
             instance=new NamingRepository();
     
         }
-    }
+    }*/
 }

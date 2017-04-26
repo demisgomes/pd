@@ -5,15 +5,27 @@
  */
 package middleware.naming;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import middleware.client.ClientProxy;
+import middleware.client.ClientRequestHandler;
+import middleware.util.Marshaller;
+import middleware.util.Message;
+import middleware.util.MessageBody;
+import middleware.util.MessageHeader;
+import middleware.util.ReplyBody;
+import middleware.util.ReplyHeader;
+import middleware.util.RequestBody;
+import middleware.util.RequestHeader;
 
 /**
  *
  * @author gprt
  */
 public class NamingProxy implements INaming {
-    private NamingRepository namingRepository=NamingRepository.getInstance();
+    private NamingRepository namingRepository;
     private String host;
     private int port;
 
@@ -43,22 +55,60 @@ public class NamingProxy implements INaming {
 
     @Override
     public ClientProxy lookup(String serviceName) {
-        return this.namingRepository.getRecord(serviceName);
+        ArrayList<Object> parameters = new ArrayList<Object>();
+        parameters.add(serviceName);
+        Message message=new Message();
+        message.setMessageBody(new MessageBody(
+                new RequestHeader("", 0, true, 0, "lookup"),
+                new RequestBody(parameters),
+                new ReplyHeader(),
+                new ReplyBody(null)));
+        message.setMessageHeader(
+                new MessageHeader("MIOP", 0, true, 0, 0));
+        ClientRequestHandler crh=new ClientRequestHandler(this.host, this.port);
+        try {
+            Marshaller marshaller = new Marshaller();
+            crh.send(marshaller.marshall(message));
+            byte[] messageMarshalled=crh.receive();
+            Message messageUnmarshalled=(Message) marshaller.unmarshall(messageMarshalled);
+            
+            return (ClientProxy) messageUnmarshalled.getMessageBody().getReplyBody().getOperationResult();
+        } catch (IOException ex) {
+            Logger.getLogger(NamingProxy.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(NamingProxy.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
     public ArrayList<String> list() {
         ArrayList<String> serviceNames = new ArrayList<String>();
-        for(int i=0;i<this.namingRepository.getRecords().size();i++){
-            serviceNames.add(this.namingRepository.getRecords().get(i).getServiceName());
-        }
         return serviceNames;
     }
 
     @Override
     public void bind(String serviceName, ClientProxy clientProxy) {
-        this.namingRepository.addRecord(serviceName, clientProxy);
-        System.out.println("middleware.naming.NamingProxy.bind() "+this.namingRepository.getRecord(serviceName));
+        ArrayList<Object> parameters = new ArrayList<Object>();
+        parameters.add(serviceName);
+        parameters.add(clientProxy);
+        System.out.println("middleware.naming.NamingProxy.bind() "+parameters.get(0));
+        Message message=new Message();
+        message.setMessageBody(new MessageBody(
+                new RequestHeader("", 0, true, 0, "bind"),
+                new RequestBody(parameters),
+                null,
+                null));
+        message.setMessageHeader(
+                new MessageHeader("MIOP", 0, true, 0, 0));
+        ClientRequestHandler crh=new ClientRequestHandler(this.host, this.port);
+        try {
+            crh.send(new Marshaller().marshall(message));
+        } catch (IOException ex) {
+            Logger.getLogger(NamingProxy.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(NamingProxy.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
