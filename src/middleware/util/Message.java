@@ -13,6 +13,14 @@ public class Message {
     private MessageHeader messageHeader;
     private MessageBody messageBody;
 
+    public Message(MessageHeader messageHeader, MessageBody messageBody) {
+        this.messageHeader = messageHeader;
+        this.messageBody = messageBody;
+    }
+
+    public Message() {
+    }
+
     public MessageHeader getMessageHeader() {
         return messageHeader;
     }

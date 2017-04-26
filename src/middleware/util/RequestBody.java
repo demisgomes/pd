@@ -5,10 +5,27 @@
  */
 package middleware.util;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  *
  * @author Demis e Lucas
  */
-public class RequestBody {
+public class RequestBody implements Serializable{
+    private ArrayList<Object> parameters = new ArrayList<Object>();
+
+    public ArrayList<Object> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(ArrayList<Object> parameters) {
+        this.parameters = parameters;
+    }
+
+    public RequestBody(ArrayList<Object> parameters) {
+        this.parameters=parameters;
+    }
+    
     
 }
