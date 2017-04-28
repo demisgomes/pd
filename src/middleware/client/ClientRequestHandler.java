@@ -48,7 +48,6 @@ public class ClientRequestHandler {
     
   public void send(byte[] msg) throws IOException, InterruptedException{
       //inicializando sockets e streams
-      System.out.println("middleware.client.ClientRequestHandler.send() "+this.host+" "+this.port);
       clientSocket = new Socket(this.host,this.port);
       outToServer = new DataOutputStream(clientSocket.getOutputStream());
       inFromServer = new DataInputStream(clientSocket.getInputStream());

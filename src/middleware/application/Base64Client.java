@@ -21,7 +21,8 @@ public class Base64Client {
         Base64OperationsProxy b64proxy = (Base64OperationsProxy)namingProxy.lookup("Base64");
         System.out.println("middleware.application.Base64Client.main() "+b64proxy);
         System.out.println("middleware.application.Base64Client.main() "+b64proxy.getHost()+" "+b64proxy.getPort());
-        b64proxy.encode("lala");
+        String result=b64proxy.encode("lala");
+        System.out.println(result);
         
     }
 }

@@ -5,11 +5,13 @@
  */
 package middleware.client;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Demis e Lucas
  */
-public class ClientProxy {
+public class ClientProxy implements Serializable{
 
     public ClientProxy(String host, int port) {
         this.host = host;

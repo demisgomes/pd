@@ -49,9 +49,6 @@ public class NamingProxy implements INaming {
         this.host = host;
         this.port = port;
     }
-    
-    
-    
 
     @Override
     public ClientProxy lookup(String serviceName) {
@@ -103,7 +100,8 @@ public class NamingProxy implements INaming {
                 new MessageHeader("MIOP", 0, true, 0, 0));
         ClientRequestHandler crh=new ClientRequestHandler(this.host, this.port);
         try {
-            crh.send(new Marshaller().marshall(message));
+            Marshaller marshaller = new Marshaller();
+            crh.send(marshaller.marshall(message));
         } catch (IOException ex) {
             Logger.getLogger(NamingProxy.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
